@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -12,9 +13,10 @@ public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @JsonProperty("first-name")
+//    @JsonProperty("first-name")
+    @NotBlank
     private String firstName;
-    @JsonProperty("last-name")
+//    @JsonProperty("last-name")
     private String lastName;
     int age;
     @JsonIgnore
@@ -46,14 +48,14 @@ public class Friend {
     public void setMarried(boolean married) {
         this.married = married;
     }
-//    public Friend(int id, String firstName, String lastName) {
-//        this.id = id;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//    }
-//
-//    public Friend() {
-//    }
+    public Friend(String firstName, String lastName) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Friend() {
+    }
 
     public int getId() {
         return id;

@@ -24,7 +24,7 @@ public class FriendController {
     FriendService friendService;
 
     @PostMapping("/friend")
-    Friend create(@Valid @RequestBody Friend friend) {
+   public Friend create(@Valid @RequestBody Friend friend) {
         return friendService.save(friend);
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -36,7 +36,7 @@ public class FriendController {
     }
 
     @GetMapping("/friend")
-    Iterable<Friend> read() {
+    public Iterable<Friend> read() {
         return friendService.findAll();
     }
 
@@ -49,7 +49,7 @@ public class FriendController {
     }
 
     @DeleteMapping("/friend/{id}")
-    void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         friendService.deleteById(id);
     }
 
@@ -71,5 +71,15 @@ public class FriendController {
             return friendService.findByLastName(lastName);
         else
             return friendService.findAll();
+    }
+    @GetMapping("/wrong")
+    public Friend somethingIsWrong() throws ValidationException {
+        throw new ValidationException("Something is wrong");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidationException.class)
+    String exceptionHandler(ValidationException e) {
+        return e.getMessage();
     }
 }
